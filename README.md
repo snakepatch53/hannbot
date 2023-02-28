@@ -18,21 +18,21 @@ Variables dotenv. Crear archivo .env en la raiz
 
 ```enviroment
    # MYSQL
-    MYSQL_DB_HOST = "localhost"
-    MYSQL_DB_USER = "root"
-    MYSQL_DB_PASS = ""
-    MYSQL_DB_NAME = "whatsapp_bot_tecnico"
-    MYSQL_DB_PORT = "3306"
+    MYSQL_DB_HOST = {{MYSQL_DB_HOST}}
+    MYSQL_DB_USER = {{MYSQL_DB_USER}}
+    MYSQL_DB_PASS = {{MYSQL_DB_PASS}}
+    MYSQL_DB_NAME = {{MYSQL_DB_NAME}}
+    MYSQL_DB_PORT = {{MYSQL_DB_PORT}}
 
     # SMARTOLT
-    SMARTOLT_URL = https://moronanet.smartolt.com/
-    SMARTOLT_USER = gonzaloproducciones1@hotmail.com
-    SMARTOLT_PASS = 2fXXBzQ9djJG
+    SMARTOLT_URL = {{SMARTOLT_URL}}
+    SMARTOLT_USER = {{SMARTOLT_USER}}
+    SMARTOLT_PASS = {{SMARTOLT_PASS}}
 
     # API MORONANET
-    API_MORONANET_URL = https://api.moronanet.com/
-    API_MORONANET_SERVICE_UPLOAD_IMG = upload_img/
-    API_MORONANET_KEY = z2phE7KCXLC2YLgt
+    API_MORONANET_URL = {{API_MORONANET_URL}}
+    API_MORONANET_SERVICE_UPLOAD_IMG = {{API_MORONANET_SERVICE_UPLOAD_IMG}}
+    API_MORONANET_KEY = {{API_MORONANET_KEY}}
 ```
 
 _Anotacion:_
