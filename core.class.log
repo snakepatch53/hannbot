@@ -1,0 +1,143 @@
+[handleMsg]:  {
+  key: {
+    remoteJid: '593959999086@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB048F3BAD7E04A323F',
+    participant: undefined
+  },
+  messageTimestamp: 1677562395,
+  pushName: 'Harold Hernández 😎',
+  message: Message {
+    conversation: 'hola',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'hola',
+  from: '593959999086'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '593959999086@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0694A789FEAE6BE75',
+    participant: undefined
+  },
+  messageTimestamp: 1677562397,
+  pushName: 'Harold Hernández 😎',
+  message: Message {
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    },
+    buttonsResponseMessage: ButtonsResponseMessage {
+      selectedButtonId: 'id-btn-0',
+      selectedDisplayText: 'Autorizame un equipo 🖥️',
+      contextInfo: [ContextInfo],
+      type: 1
+    }
+  },
+  body: 'Autorizame un equipo 🖥️',
+  from: '593959999086'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '593959999086@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB06A9EEF591D6B4B14',
+    participant: undefined
+  },
+  messageTimestamp: 1677562425,
+  pushName: 'Harold Hernández 😎',
+  message: Message {
+    conversation: '0',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '0',
+  from: '593959999086'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '593959999086@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB03934D992C72C36CC',
+    participant: undefined
+  },
+  messageTimestamp: 1677562439,
+  pushName: 'Harold Hernández 😎',
+  message: Message {
+    conversation: '5',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '5',
+  from: '593959999086'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '593959999086@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0195F0B6D6CFE1236',
+    participant: undefined
+  },
+  messageTimestamp: 1677562447,
+  pushName: 'Harold Hernández 😎',
+  message: Message {
+    conversation: 'Testbot',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'Testbot',
+  from: '593959999086'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '593959999086@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0E079BAD7CC38C423',
+    participant: undefined
+  },
+  messageTimestamp: 1677562491,
+  pushName: 'Harold Hernández 😎',
+  message: Message {
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    },
+    buttonsResponseMessage: ButtonsResponseMessage {
+      selectedButtonId: 'id-btn-0',
+      selectedDisplayText: 'Si ✔️',
+      contextInfo: [ContextInfo],
+      type: 1
+    }
+  },
+  body: 'Si ✔️',
+  from: '593959999086'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '593959999086@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB09FA2AA00A2074D19',
+    participant: undefined
+  },
+  messageTimestamp: 1677562499,
+  pushName: 'Harold Hernández 😎',
+  message: Message {
+    conversation: 'hola',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'hola',
+  from: '593959999086'
+}
