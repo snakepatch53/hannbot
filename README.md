@@ -17,11 +17,22 @@ Mysql script
 Variables dotenv. Crear archivo .env en la raiz
 
 ```enviroment
+   # MYSQL
     MYSQL_DB_HOST = "localhost"
     MYSQL_DB_USER = "root"
     MYSQL_DB_PASS = ""
     MYSQL_DB_NAME = "whatsapp_bot_tecnico"
     MYSQL_DB_PORT = "3306"
+
+    # SMARTOLT
+    SMARTOLT_URL = https://moronanet.smartolt.com/
+    SMARTOLT_USER = gonzaloproducciones1@hotmail.com
+    SMARTOLT_PASS = 2fXXBzQ9djJG
+
+    # API MORONANET
+    API_MORONANET_URL = https://api.moronanet.com/
+    API_MORONANET_SERVICE_UPLOAD_IMG = upload_img/
+    API_MORONANET_KEY = z2phE7KCXLC2YLgt
 ```
 
 _Anotacion:_
