@@ -10,8 +10,12 @@ function fastKey() {
     return Math.random().toString(36).substr(2, 3);
 }
 
+async function getVlan(board, port) {
+    return "1" + board + (port < 10 ? "0" + port : port);
+}
+
 module.exports = {
     sleep,
-    // curl,
     fastKey,
+    getVlan,
 };

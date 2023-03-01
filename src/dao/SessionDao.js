@@ -8,10 +8,11 @@ async function select() {
 }
 
 /** Consulta un session por id
+ * @param {string} name Ingresa el name del session
  * @returns {Promise<any>} Retorna un objeto de session
  */
-async function selectLast() {
-    return (await db_query("SELECT * FROM sessions ORDER BY session_id DESC LIMIT 1"))[0];
+async function selectLast(name) {
+    return (await db_query(`SELECT * FROM sessions WHERE session_name = '${name}' ORDER BY session_id DESC LIMIT 1`))[0];
 }
 
 /** Consulta un session por id
@@ -27,7 +28,7 @@ async function selectById(id) {
  * @returns {string} Retorna el id del session insertado
  * */
 async function insert(session_name, session_key) {
-    const session_id = (await db_query(`INSERT INTO sessions SET session_name = '${session_name}' session_key = '${session_key}'`)).insertId;
+    const session_id = (await db_query(`INSERT INTO sessions SET session_name = '${session_name}', session_key = '${session_key}'`)).insertId;
     return session_id;
 }
 

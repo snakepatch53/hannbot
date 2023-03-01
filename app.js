@@ -22,7 +22,7 @@ const main = async () => {
         provider: adapterProvider,
         database: adapterDB,
     });
-    QRPortalWeb();
+    QRPortalWeb({ port: process.env.APP_PORT });
 };
 
 main();

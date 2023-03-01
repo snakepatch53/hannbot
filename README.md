@@ -17,6 +17,10 @@ Mysql script
 Variables dotenv. Crear archivo .env en la raiz
 
 ```enviroment
+    # LOCAL
+    APP_MODE = {{APP_MODE}} # local | production
+    APP_PORT = {{APP_PORT}}
+
    # MYSQL
     MYSQL_DB_HOST = {{MYSQL_DB_HOST}}
     MYSQL_DB_USER = {{MYSQL_DB_USER}}

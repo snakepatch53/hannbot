@@ -1,7 +1,7 @@
 // imports
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 const navigate = require("./adapter.scraping");
-const { sleep } = require("./utils.scraping");
+const { sleep, getVlan } = require("./utils.scraping");
 const { curl_post } = require("./../general/curl.general");
 
 // #region exportables
@@ -164,13 +164,12 @@ async function login(page) {
         return false;
     }
 }
+
 async function waitLoad(page) {
     await page.waitForFunction(() => document.title !== "", { timeout: 10000 });
     await sleep(1);
 }
-async function getVlan(board, port) {
-    return "1" + board + (port < 10 ? "0" + port : port);
-}
+
 async function uploadImgPower(name, path) {
     return await curl_post(
         {

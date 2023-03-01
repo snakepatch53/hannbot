@@ -1,5 +1,5 @@
 // const { select } = require("./src/dao/SessionDao");
-const { getUncofigureds_smartolt, getPlans_smartolt, autorize_smartolt, searchOnus_smartolt, getPower_smartolt } = require("./src/scraping");
+// const { getUncofigureds_smartolt, searchClients_mikrowisp, getPlans_smartolt, autorize_smartolt, searchOnus_smartolt, getPower_smartolt } = require("./src/scraping");
 
 // getUncofigureds_smartolt();
 
@@ -16,10 +16,10 @@ const { getUncofigureds_smartolt, getPlans_smartolt, autorize_smartolt, searchOn
 //     .then((rs) => console.log(rs))
 //     .catch((err) => console.log(err));
 
-const onu = {
-    url: "https://moronanet.smartolt.com/onu/view/1191",
-};
-getPower_smartolt(onu).then((rs) => console.log(rs));
+// const onu = {
+//     url: "https://moronanet.smartolt.com/onu/view/1191",
+// };
+// getPower_smartolt(onu).then((rs) => console.log(rs));
 
 // const { curl_post } = require("./src/general/curl.general");
 
@@ -47,3 +47,29 @@ getPower_smartolt(onu).then((rs) => console.log(rs));
 // )
 //     .then((rs) => console.log(rs))
 //     .catch((err) => console.log(err));
+
+const { searchClients_mikrowisp, getPlans_mikrowisp, getData_mikrowisp } = require("./src/scraping");
+
+searchClients_mikrowisp("juan").then((client) => {
+    getPlans_mikrowisp(client[0]).then((service) => {
+        client[0].services = service;
+        getData_mikrowisp(client[0], service[0]).then((rs) => {
+            client[0].service = rs;
+            console.log(client[0]);
+        });
+    });
+});
+
+// getPlans_mikrowisp({ url: "http://167.71.189.123/admin/#ajax/viewuser?user=000747&token=MDAwNzQ3" }).then((service) => {
+//     console.log(service);
+// });
+
+// getData_mikrowisp(
+//     {
+//         url: "http://167.71.189.123/admin/#ajax/viewuser?user=000747&token=MDAwNzQ3",
+//     },
+//     {
+//         id: "2045",
+//         ip: "10.1.3.13",
+//     }
+// ).then((rs) => console.log(rs));
