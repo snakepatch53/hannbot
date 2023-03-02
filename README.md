@@ -40,7 +40,7 @@ Variables dotenv. Crear archivo .env en la raiz
 ```
 
 _Anotacion:_
-Tuve un error al momento de ejecutar el metodo endFlow, que solucione modificando el archivo: 'node_modules > @bot-whatsapp > database > lib > mysql > index.cjs'
+Tuve un error al momento de ejecutar el metodo endFlow, que solucione modificando el archivo: 'node_modules/@bot-whatsapp/database/lib/mysql/index.cjs'
 En el metodo 'save' hay una parte donde genera los valores:
 
 ```cjs
