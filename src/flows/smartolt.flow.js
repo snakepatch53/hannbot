@@ -13,7 +13,7 @@ const autorizeObj = {
 };
 
 const flowAutorizar_smartolt = addKeyword(["autorizame un equipo"])
-    .addAnswer("Espera un momento mientras busco los equipos sin autorizar 🔄", null, async (ctx, { flowDynamic }) => {
+    .addAnswer("Espera un momento mientras busco los equipos sin autorizar ⌛", null, async (ctx, { flowDynamic }) => {
         autorizeObj.unconfigureds = await getUncofigureds_smartolt();
         const responses = [];
         await autorizeObj.unconfigureds.forEach(async (onu, index) => {
@@ -22,7 +22,7 @@ const flowAutorizar_smartolt = addKeyword(["autorizame un equipo"])
         await flowDynamic(responses);
     })
     .addAnswer(
-        "Listo, selecciona el numero de opcion segun el equipo con la serie que deseas autorizar",
+        "➡️ Listo, selecciona el numero de opcion segun el equipo con la serie que deseas autorizar: ",
         {
             capture: true,
         },
@@ -34,7 +34,7 @@ const flowAutorizar_smartolt = addKeyword(["autorizame un equipo"])
         }
     )
     .addAnswer("Selecciona el plan que deseas asignar al equipo")
-    .addAnswer("Espera mientras busco los planes disponibles 🔄", null, async (ctx, { flowDynamic }) => {
+    .addAnswer("Espera mientras busco los planes disponibles ⌛", null, async (ctx, { flowDynamic }) => {
         autorizeObj.plans = await getPlans_smartolt();
         const responses = [];
         await autorizeObj.plans.forEach(async (plan, index) => {
@@ -43,7 +43,7 @@ const flowAutorizar_smartolt = addKeyword(["autorizame un equipo"])
         await flowDynamic(responses);
     })
     .addAnswer(
-        "Listo, selecciona el numero de opcion segun el plan que deseas asignar",
+        "➡️ Listo, selecciona el numero de opcion segun el plan que deseas asignar:",
         {
             capture: true,
         },
@@ -64,18 +64,17 @@ const flowAutorizar_smartolt = addKeyword(["autorizame un equipo"])
             autorizeObj.client_name = name;
         }
     )
-    .addAnswer("Espera mientras autorizo el equipo 🔄", null, async (ctx, { flowDynamic }) => {
+    .addAnswer("Espera mientras autorizo el equipo ⌛", null, async (ctx, { flowDynamic }) => {
         const { selected_onu, selected_plan, client_name } = autorizeObj;
         const power = await autorize_smartolt(selected_onu, selected_plan, client_name);
-        await flowDynamic(["Listo el equipo esta autorizado", "*TX Power:* " + power.txpower, "*RX Power:* " + power.rxpower, "*VLAN:* " + selected_onu.vlan]);
+        await flowDynamic(["✅ Listo el equipo esta autorizado", "*TX Power:* " + power.txpower, "*RX Power:* " + power.rxpower, "*VLAN:* " + selected_onu.vlan]);
         await flowDynamic({
             body: "Desde SmartOlt",
             media: power.url_img,
         });
     })
-    .addAnswer("¿Quieres consultar los datos en mikrowisp?", {
-        buttons: [{ body: "Si ✔️" }, { body: "No 🚫" }],
-    });
+    .addAnswer("😁 Gracias por usar este servicio 😁")
+    .addAnswer(`👋 Si necesitas mi ayuda de nuevo solo escribe "*HOLA*" 👋`);
 // #endregion
 
 // #region flow ver potencia
@@ -119,7 +118,7 @@ const flowVerPotencia_smartolt = addKeyword(["ver la potencia de un cliente"])
         await flowDynamic(responses);
     })
     .addAnswer(
-        "Listo, selecciona el numero de opcion segun el nombre del cliente 👤",
+        "➡️ Listo, selecciona el numero de opcion segun el nombre del cliente: ",
         {
             capture: true,
         },
@@ -130,7 +129,7 @@ const flowVerPotencia_smartolt = addKeyword(["ver la potencia de un cliente"])
             powerObj.selected_onu = onu;
         }
     )
-    .addAnswer("Espera mientras obtengo la potencia del equipo 🔄", null, async (ctx, { flowDynamic }) => {
+    .addAnswer("Espera mientras obtengo la potencia del equipo ⌛", null, async (ctx, { flowDynamic }) => {
         const { selected_onu } = powerObj;
         powerObj.power = await getPower_smartolt(selected_onu);
         await flowDynamic(["*TX Power:* " + powerObj.power.txpower, "*RX Power:* " + powerObj.power.rxpower, "*VLAN:* " + selected_onu.vlan]);
@@ -138,7 +137,9 @@ const flowVerPotencia_smartolt = addKeyword(["ver la potencia de un cliente"])
             body: "Desde SmartOlt",
             media: powerObj.power.url_img,
         });
-    });
+    })
+    .addAnswer("😁 Gracias por usar este servicio 😁")
+    .addAnswer(`👋 Si necesitas mi ayuda de nuevo solo escribe "*HOLA*" 👋`);
 
 // #endregion
 

@@ -3,6 +3,10 @@ const navigate = require("./adapter.scraping");
 const { sleep } = require("./utils.scraping");
 
 // #region exportables
+/** Busca los clientes en mikrowisp
+ * @param {string} client_name nombre del cliente a buscar
+ * @returns {Promise<[]>} lista de clientes
+ */
 async function searchClients_mikrowisp(client_name) {
     return await navigate(async function (browser, context, page) {
         await login(page);
@@ -18,6 +22,9 @@ async function searchClients_mikrowisp(client_name) {
         await page.locator("#data-usuarios tfoot tr th input.form-control>>nth=1").fill(client_name);
         await page.locator("#data-usuarios tfoot tr th input.form-control>>nth=1").press("Enter");
         await sleep(1);
+        // comprobamos que hayan resultados
+        const noResults = await page.evaluate(() => document.querySelector("#data-usuarios tbody tr td.dataTables_empty") != null);
+        if (noResults) return [];
         // obtenemos los clientes
         const clients = await page.evaluate(() => {
             const clients = [];
@@ -44,6 +51,10 @@ async function searchClients_mikrowisp(client_name) {
     });
 }
 
+/** Obtiene los planes de un cliente
+ * @param {object} client cliente a buscar
+ * @returns {Promise<[]>} lista de servicios de dicho cliente
+ */
 async function getPlans_mikrowisp(client) {
     return await navigate(async function (browser, context, page) {
         await login(page);
@@ -60,10 +71,13 @@ async function getPlans_mikrowisp(client) {
         });
         // comprobamos si existen servicios
         const existServices = await page.evaluate(() => !document.querySelector(`#data-servicios tbody tr td.dataTables_empty`));
-        if (!existServices) return [];
+        if (!existServices) {
+            client.services = [];
+            return client;
+        }
         await sleep(1);
         // obtenemos los servicios
-        const services = await page.evaluate(() => {
+        client.services = await page.evaluate(() => {
             const _services = [];
             const rows = document.querySelectorAll(`#data-servicios tbody tr`);
             rows.forEach((row, index) => {
@@ -82,10 +96,15 @@ async function getPlans_mikrowisp(client) {
             });
             return _services;
         });
-        return services;
+        return client;
     });
 }
 
+/** Obtiene los datos de un servicio
+ * @param {object} client cliente a buscar
+ * @param {object} service servicio seleccionado a buscar
+ * @returns {object} datos del servicio
+ */
 async function getData_mikrowisp(client, service) {
     return await navigate(async function (browser, context, page) {
         await login(page);
@@ -126,6 +145,7 @@ async function getData_mikrowisp(client, service) {
         // obtenemos los datos
         service.description = await page.evaluate(() => document.querySelector(`textarea[name="servicio[descripcion]"]`).value);
         service.location = await page.evaluate(() => document.querySelector(`input[name="servicio[coordenadas]"]`).value);
+        service.location_link = "https://www.google.com.ec/maps/place/" + service.location.replace(/\s+/g, "");
         service.pppoe_user = await page.evaluate(() => document.querySelector(`input[name="servicio[pppuser]"]`).value);
         service.pppoe_pass = await page.evaluate(() => document.querySelector(`input[name="servicio[ppppass]"]`).value);
         service.vlan = getVlanFromIP(service.ip);

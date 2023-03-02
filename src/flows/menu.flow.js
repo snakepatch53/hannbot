@@ -1,7 +1,39 @@
 const { addKeyword } = require("@bot-whatsapp/bot");
 const { flowAutorizar_smartolt, flowVerPotencia_smartolt } = require("./smartolt.flow");
+const { flowGetDataClient_smartolt, flowChangeIPClient_mikrowisp } = require("./mikrowisp.flow");
 
-const flowMenu = addKeyword(["menu", "hola", "ole", "alo"])
+const flowMenu = addKeyword([
+    "hola",
+    "menu",
+    "inicio",
+    "comenzar",
+    "empezar",
+    "iniciar",
+    "inicia",
+    "iniciemos",
+    "buenas tardes",
+    "buenas noches",
+    "buenos dias",
+    "buen dia",
+    "buenas",
+    "hello",
+    "hi",
+    "hey",
+    "hola",
+    "holi",
+    "holis",
+    "holaa",
+    "holaaa",
+    "holaaaa",
+    "holaaaaa",
+    "start",
+    "good morning",
+    "good afternoon",
+    "good evening",
+    "good night",
+    "good day",
+    "good",
+])
     .addAnswer("🙌 Hola bienvenido a la nueva version de *Hannbot 🤖* ")
     .addAnswer("Soy un bot tenico de Moronanet, listo para ayudarte.")
     .addAnswer(["📡 SmartOlt:"], {
@@ -13,16 +45,7 @@ const flowMenu = addKeyword(["menu", "hola", "ole", "alo"])
             buttons: [{ body: "Enviame datos de un cliente 🧑" }, { body: "Cambia el IP de un cliente 🌐" }],
         },
         null,
-        [
-            flowAutorizar_smartolt,
-            flowVerPotencia_smartolt,
-            addKeyword("img").addAnswer("img", null, (ctx, { flowDynamic }) => {
-                flowDynamic({
-                    body: "img",
-                    media: "https:\\/\\/api.moronanet.com\\/public\\/cloud_img\\/power_ont_smartolt.png",
-                });
-            }),
-        ]
+        [flowAutorizar_smartolt, flowVerPotencia_smartolt, flowGetDataClient_smartolt, flowChangeIPClient_mikrowisp]
     );
 
 module.exports = flowMenu;

@@ -50,15 +50,17 @@
 
 const { searchClients_mikrowisp, getPlans_mikrowisp, getData_mikrowisp } = require("./src/scraping");
 
-searchClients_mikrowisp("juan").then((client) => {
-    getPlans_mikrowisp(client[0]).then((service) => {
-        client[0].services = service;
-        getData_mikrowisp(client[0], service[0]).then((rs) => {
-            client[0].service = rs;
-            console.log(client[0]);
-        });
-    });
-});
+// searchClients_mikrowisp("juan").then((client) => {
+//     getPlans_mikrowisp(client[0]).then((service) => {
+//         client[0].services = service;
+//         getData_mikrowisp(client[0], service[0]).then((rs) => {
+//             client[0].service = rs;
+//             console.log(client[0]);
+//         });
+//     });
+// });
+
+searchClients_mikrowisp("juan").then((client) => console.log(client));
 
 // getPlans_mikrowisp({ url: "http://167.71.189.123/admin/#ajax/viewuser?user=000747&token=MDAwNzQ3" }).then((service) => {
 //     console.log(service);
