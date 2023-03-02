@@ -3,8 +3,8 @@
 Mysql script
 
 ```sql
-    CREATE DATABASE whatsapp_bot_tecnico;
-    USE whatsapp_bot_tecnico;
+    CREATE DATABASE hannbot;
+    USE hannbot;
 
     CREATE TABLE sessions (
         session_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
