@@ -48,7 +48,7 @@
 //     .then((rs) => console.log(rs))
 //     .catch((err) => console.log(err));
 
-const { searchClients_mikrowisp, getPlans_mikrowisp, getData_mikrowisp } = require("./src/scraping");
+const { searchClients_mikrowisp, getPlans_mikrowisp, updateVlanIp_mikrowisp, getData_mikrowisp } = require("./src/scraping");
 
 // searchClients_mikrowisp("juan").then((client) => {
 //     getPlans_mikrowisp(client[0]).then((service) => {
@@ -60,7 +60,12 @@ const { searchClients_mikrowisp, getPlans_mikrowisp, getData_mikrowisp } = requi
 //     });
 // });
 
-searchClients_mikrowisp("juan").then((client) => console.log(client));
+// searchClients_mikrowisp("juan").then((client) => console.log(client));
+updateVlanIp_mikrowisp(
+    { url: "http://167.71.189.123/admin/#ajax/viewuser?user=1557&token=c0U3NDBTU2tuaXFmeDFHQ0pvcjlwZz09" },
+    { id: "2056" },
+    { vlan: "1103" }
+).then((rs) => console.log(rs));
 
 // getPlans_mikrowisp({ url: "http://167.71.189.123/admin/#ajax/viewuser?user=000747&token=MDAwNzQ3" }).then((service) => {
 //     console.log(service);

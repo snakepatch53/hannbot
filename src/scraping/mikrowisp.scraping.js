@@ -153,6 +153,90 @@ async function getData_mikrowisp(client, service) {
     });
 }
 
+/** Actualiza la VLAN y la IP de un servicio
+ * @param {object} client cliente a actualizar
+ * @param {object} service servicio a actualizar
+ * @param {object} ont ont a actualizar
+ * @returns {object} service actualizado
+ */
+async function updateVlanIp_mikrowisp(client, service, ont) {
+    return await navigate(async function (browser, context, page) {
+        await login(page);
+        await page.goto(client.url);
+        await waitLoad(page);
+        await page.evaluate(() => document.querySelector(`a.nav-link[href="#nav-tab-2"]`).click());
+        // hacemos que espere hasta que cargue los servicios
+        await page.waitForFunction(() => {
+            const el1 = document.querySelector(`#data-servicios tbody tr td.dataTables_empty`);
+            const el2 = document.querySelectorAll(`#data-servicios tbody tr td`);
+            return (el1 && !el1.innerText.includes("Cargando")) || el2.length > 1;
+        });
+        // comprobamos si existen servicios
+        const existServices = await page.evaluate(() => !document.querySelector(`#data-servicios tbody tr td.dataTables_empty`));
+        if (!existServices) return false;
+        await sleep(1);
+        // abrimos el servicio que corresponde
+        await page.evaluate((service_id) => {
+            const rows = document.querySelectorAll(`#data-servicios tbody tr`);
+            rows.forEach((row, index) => {
+                const cells = row.querySelectorAll("td");
+                if (cells[0].innerText == service_id) {
+                    return row.querySelectorAll(`td a`).forEach((e) => (e.innerHTML.includes("edit") ? e.click() : null));
+                }
+            });
+        }, service.id);
+        // hacemos que espere hasta que cargue el servicio
+        await page.waitForFunction(() => {
+            try {
+                const el1 = document.querySelectorAll(`#modaltmp #servicio-form-edit .dataservice`);
+                if (el1.length == 0) return false;
+                if (el1[0].querySelectorAll(".form-group.row").length > 0 && el1[1].querySelectorAll(".form-group.row").length > 0) return true;
+            } catch (error) {
+                return false;
+            }
+        });
+        await sleep(3);
+        //configurar redIPV4
+        await page.evaluate((vlan) => {
+            let eventChange = new Event("change");
+            const $redIpv4 = document.querySelector(`select[name="servicio[redipv4]"]`);
+            const $vlans = $redIpv4.options;
+            const indexVlan = [...$vlans].findIndex((e) => e.innerText.toLowerCase().includes(vlan));
+            $redIpv4.selectedIndex = indexVlan;
+            $redIpv4.dispatchEvent(eventChange);
+            return true;
+        }, ont.vlan);
+
+        //esperar a que cargue la redipv4
+        await sleep(3);
+        await page.waitForFunction(() => document.querySelector(`select[name="servicio[ip][]"]`).options.length > 0);
+
+        //configurar ip
+        await page.evaluate(() => {
+            let eventChange = new Event("change");
+            const $ipv4 = document.querySelector(`select[name="servicio[ip][]"]`);
+            const $ips = $ipv4.options;
+            const indexIp = $ips.length == 0 ? 0 : $ips.length - 1;
+            $ipv4.selectedIndex = indexIp;
+            $ipv4.dispatchEvent(eventChange);
+            return true;
+        });
+
+        // obtenemos los datos
+        service.description = await page.evaluate(() => document.querySelector(`textarea[name="servicio[descripcion]"]`).value);
+        service.location = await page.evaluate(() => document.querySelector(`input[name="servicio[coordenadas]"]`).value);
+        service.location_link = "https://www.google.com.ec/maps/place/" + service.location.replace(/\s+/g, "");
+        service.pppoe_user = await page.evaluate(() => document.querySelector(`input[name="servicio[pppuser]"]`).value);
+        service.pppoe_pass = await page.evaluate(() => document.querySelector(`input[name="servicio[ppppass]"]`).value);
+        service.vlan = ont.vlan;
+
+        // guardar cambios
+        await page.evaluate(() => document.querySelector(`#servicio-form-edit button[type=submit]`).click());
+        await page.waitForFunction(() => document.querySelector(`#modaltmp`).classList.contains("show") == false);
+        return service;
+    });
+}
+
 async function changeIP_mikrowisp() {
     return await navigate(async function (browser, context, page) {});
 }
@@ -251,5 +335,6 @@ module.exports = {
     searchClients_mikrowisp,
     getPlans_mikrowisp,
     getData_mikrowisp,
+    updateVlanIp_mikrowisp,
     changeIP_mikrowisp,
 };
